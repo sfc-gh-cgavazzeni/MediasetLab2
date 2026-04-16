@@ -1,0 +1,876 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<title>Workshop Snowflake AI &amp; Cortex per Mediaset - Guida Partecipanti</title>
+<style>
+  @page {
+    size: A4;
+    margin: 2cm 2.5cm 2.5cm 2.5cm;
+    @bottom-center {
+      content: "Powered by Cortex Code";
+      font-size: 8pt;
+      color: #999;
+    }
+  }
+  body {
+    font-family: -apple-system, 'Helvetica Neue', Arial, sans-serif;
+    font-size: 11pt;
+    line-height: 1.6;
+    color: #1a1a1a;
+    max-width: 100%;
+  }
+  h1 {
+    color: #29B5E8;
+    font-size: 22pt;
+    border-bottom: 3px solid #29B5E8;
+    padding-bottom: 8px;
+    margin-top: 0;
+  }
+  h2 {
+    color: #11567F;
+    font-size: 16pt;
+    border-bottom: 2px solid #29B5E8;
+    padding-bottom: 5px;
+    margin-top: 30px;
+    page-break-after: avoid;
+  }
+  h3 {
+    color: #1B8BBE;
+    font-size: 13pt;
+    margin-top: 20px;
+    page-break-after: avoid;
+  }
+  h4 {
+    color: #333;
+    font-size: 11.5pt;
+    margin-top: 15px;
+    page-break-after: avoid;
+  }
+  table {
+    border-collapse: collapse;
+    width: 100%;
+    margin: 12px 0;
+    font-size: 10pt;
+  }
+  th {
+    background-color: #29B5E8;
+    color: white;
+    padding: 8px 10px;
+    text-align: left;
+    font-weight: 600;
+  }
+  td {
+    border: 1px solid #ddd;
+    padding: 6px 10px;
+  }
+  tr:nth-child(even) {
+    background-color: #f8f9fa;
+  }
+  code {
+    background-color: #f0f3f5;
+    padding: 2px 5px;
+    border-radius: 3px;
+    font-family: 'SF Mono', 'Menlo', 'Consolas', monospace;
+    font-size: 9.5pt;
+  }
+  pre {
+    background-color: #1e2937;
+    color: #e6edf3;
+    padding: 14px 16px;
+    border-radius: 6px;
+    overflow-x: auto;
+    font-size: 9pt;
+    line-height: 1.5;
+    page-break-inside: avoid;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+  }
+  pre code {
+    background-color: transparent;
+    color: inherit;
+    padding: 0;
+  }
+  blockquote {
+    border-left: 4px solid #29B5E8;
+    margin: 12px 0;
+    padding: 10px 16px;
+    background-color: #f0f8ff;
+    color: #333;
+    font-style: normal;
+    page-break-inside: avoid;
+  }
+  blockquote p {
+    margin: 0;
+  }
+  hr {
+    border: none;
+    border-top: 1px solid #ddd;
+    margin: 25px 0;
+  }
+  strong {
+    color: #11567F;
+  }
+  ol, ul {
+    padding-left: 24px;
+  }
+  li {
+    margin-bottom: 4px;
+  }
+  p {
+    margin: 8px 0;
+  }
+  a {
+    color: #29B5E8;
+    text-decoration: none;
+  }
+  em {
+    color: #555;
+  }
+</style>
+</head>
+<body>
+<h1>Workshop Snowflake AI &amp; Cortex per Mediaset</h1>
+<h2>Guida per i Partecipanti</h2>
+<hr />
+
+<h2>Informazioni Workshop</h2>
+<table>
+<thead>
+<tr><th></th><th></th></tr>
+</thead>
+<tbody>
+<tr><td><strong>Durata</strong></td><td>2 ore</td></tr>
+<tr><td><strong>Livello</strong></td><td>Intermedio</td></tr>
+<tr><td><strong>Prerequisiti</strong></td><td>Completamento Workshop 1 (dati caricati in MEDIASET_LAB), conoscenze base SQL</td></tr>
+<tr><td><strong>Settore</strong></td><td>TV Broadcasting</td></tr>
+</tbody>
+</table>
+<hr />
+
+<h2>Agenda</h2>
+<table>
+<thead>
+<tr><th>Orario</th><th>Modulo</th><th>Durata</th></tr>
+</thead>
+<tbody>
+<tr><td>00:00 - 00:15</td><td>Modulo 1: Snowpark DataFrames in Notebook</td><td>15 min</td></tr>
+<tr><td>00:15 - 01:00</td><td>Modulo 2: Cortex Analyst, Semantic Views e Snowflake Intelligence</td><td>45 min</td></tr>
+<tr><td>01:00 - 01:30</td><td>Modulo 3: Cortex Search - Ricerca Semantica</td><td>30 min</td></tr>
+<tr><td>01:30 - 02:00</td><td>Modulo 4: AI SQL in Notebook (Sentiment, Classify, Summarize, Translate)</td><td>30 min</td></tr>
+</tbody>
+</table>
+<hr />
+
+<h2>Prerequisiti</h2>
+<blockquote>
+<p>Questo workshop richiede che i dati del <strong>Workshop 1</strong> siano gi&agrave; caricati nel database <code>MEDIASET_LAB</code>. Verifica eseguendo lo script <code>modulo_1_setup_verifiche.sql</code> (Sezione 1) oppure questa query:</p>
+</blockquote>
+
+<pre><code class="language-sql">SELECT 'PROGRAMMI_TV' as tabella, COUNT(*) as righe FROM MEDIASET_LAB.RAW.PROGRAMMI_TV
+UNION ALL SELECT 'PALINSESTO', COUNT(*) FROM MEDIASET_LAB.RAW.PALINSESTO
+UNION ALL SELECT 'ASCOLTI', COUNT(*) FROM MEDIASET_LAB.RAW.ASCOLTI
+UNION ALL SELECT 'ABBONATI', COUNT(*) FROM MEDIASET_LAB.RAW.ABBONATI
+UNION ALL SELECT 'CONTENUTI_DESCRIZIONI', COUNT(*) FROM MEDIASET_LAB.RAW.CONTENUTI_DESCRIZIONI
+UNION ALL SELECT 'CONTRATTI_PUBBLICITARI', COUNT(*) FROM MEDIASET_LAB.RAW.CONTRATTI_PUBBLICITARI
+UNION ALL SELECT 'FEEDBACK_SOCIAL', COUNT(*) FROM MEDIASET_LAB.RAW.FEEDBACK_SOCIAL
+ORDER BY tabella;</code></pre>
+
+<p><strong>Risultati attesi:</strong> ABBONATI (20), ASCOLTI (5000), CONTENUTI_DESCRIZIONI (20), CONTRATTI_PUBBLICITARI (15), FEEDBACK_SOCIAL (20), PALINSESTO (600), PROGRAMMI_TV (20).</p>
+<p>Se le tabelle non sono presenti, eseguire prima lo script <code>01_setup_data.sql</code> del Workshop 1.</p>
+<hr />
+
+<!-- ================================================================ -->
+<!-- MODULO 1 -->
+<!-- ================================================================ -->
+
+<h2>Modulo 1: Snowpark DataFrames in Notebook (15 min)</h2>
+
+<blockquote>
+<p><strong>Snowpark</strong> &egrave; il framework Python di Snowflake che permette di manipolare dati con un'API DataFrame simile a Pandas/PySpark, ma il codice viene eseguito direttamente nel cloud Snowflake. Non &egrave; necessario scaricare i dati in locale.</p>
+</blockquote>
+
+<h3>Obiettivi di Apprendimento</h3>
+<ul>
+<li>Creare e manipolare DataFrame Snowpark in un notebook</li>
+<li>Eseguire operazioni di select, filter, group_by e aggregazione</li>
+<li>Effettuare join tra DataFrame di tabelle diverse</li>
+<li>Utilizzare window functions per ranking</li>
+<li>Salvare risultati in nuove tabelle</li>
+<li>Creare visualizzazioni con matplotlib</li>
+</ul>
+
+<h3>Istruzioni Passo-Passo</h3>
+
+<h4>Step 1.1: Importare il Notebook Snowpark</h4>
+<ol>
+<li>Nel menu laterale, vai su <strong>Projects</strong> &gt; <strong>Workspaces</strong></li>
+<li>Clicca su <strong>"..."</strong> (menu) &gt; <strong>Import</strong> &gt; <strong>Import .ipynb file</strong></li>
+<li>Seleziona il file <code>Mediaset_Snowpark_Lab.ipynb</code> fornito</li>
+<li>Il notebook si apre con celle Python pronte per l'esecuzione</li>
+</ol>
+
+<h4>Step 1.2: Setup Sessione Snowpark</h4>
+<p>Esegui la prima cella per ottenere la sessione attiva:</p>
+<pre><code class="language-python">from snowflake.snowpark.context import get_active_session
+session = get_active_session()
+session.use_database("MEDIASET_LAB")
+session.use_schema("RAW")
+print("Sessione Snowpark attiva!")</code></pre>
+<blockquote>
+<p><strong>Nota:</strong> In un notebook Snowflake, la sessione &egrave; gi&agrave; disponibile tramite <code>get_active_session()</code>. Non &egrave; necessario configurare credenziali.</p>
+</blockquote>
+
+<h4>Step 1.3: Caricamento DataFrame</h4>
+<pre><code class="language-python">df_programmi = session.table("MEDIASET_LAB.RAW.PROGRAMMI_TV")
+df_ascolti = session.table("MEDIASET_LAB.RAW.ASCOLTI")
+
+print(f"Programmi TV: {df_programmi.count()} righe")
+print(f"Ascolti: {df_ascolti.count()} righe")
+
+df_programmi.show()</code></pre>
+<blockquote>
+<p><strong>Nota:</strong> <code>session.table()</code> crea un DataFrame <strong>lazy</strong> &mdash; non scarica i dati in memoria. Le operazioni vengono tradotte in SQL ed eseguite nel warehouse Snowflake.</p>
+</blockquote>
+
+<h4>Step 1.4: Operazioni Base</h4>
+<pre><code class="language-python">from snowflake.snowpark.functions import col
+
+# Select colonne specifiche
+df_programmi.select("TITOLO", "GENERE", "CANALE", "COSTO_EPISODIO_EUR").show()
+
+# Filter: solo programmi di Canale 5
+df_canale5 = df_programmi.filter(col("CANALE") == "Canale 5")
+print(f"Programmi su Canale 5: {df_canale5.count()}")
+df_canale5.select("TITOLO", "GENERE").show()</code></pre>
+
+<h4>Step 1.5: Aggregazioni e Join</h4>
+<pre><code class="language-python">from snowflake.snowpark.functions import avg, sum as sum_, count, round as round_
+
+# Top 10 programmi per share medio (join Ascolti + Programmi)
+df_top = df_ascolti.join(df_programmi, "PROGRAMMA_ID") \
+    .group_by("TITOLO", "GENERE", "CANALE") \
+    .agg(
+        round_(avg("SHARE_PERCENTUALE"), 2).alias("SHARE_MEDIO"),
+        sum_("TELESPETTATORI").alias("TELESPETTATORI_TOTALI"),
+        count("*").alias("RILEVAZIONI")
+    ) \
+    .sort(col("SHARE_MEDIO").desc()) \
+    .limit(10)
+
+df_top.show()</code></pre>
+
+<h4>Step 1.6: Window Functions</h4>
+<pre><code class="language-python">from snowflake.snowpark.functions import rank
+from snowflake.snowpark import Window
+
+# Ranking programmi per share all'interno di ogni canale
+window_spec = Window.partition_by("CANALE").order_by(col("SHARE_MEDIO").desc())
+
+df_ranking = df_ascolti.join(df_programmi, "PROGRAMMA_ID") \
+    .group_by("TITOLO", "CANALE") \
+    .agg(round_(avg("SHARE_PERCENTUALE"), 2).alias("SHARE_MEDIO")) \
+    .with_column("RANK_IN_CANALE", rank().over(window_spec))
+
+df_ranking.filter(col("RANK_IN_CANALE") &lt;= 3).sort("CANALE", "RANK_IN_CANALE").show()</code></pre>
+
+<h4>Step 1.7: Salvataggio e Visualizzazione</h4>
+<p>Salva i risultati nello schema ANALYTICS:</p>
+<pre><code class="language-python">df_top.write.mode("overwrite").save_as_table("MEDIASET_LAB.ANALYTICS.TOP_PROGRAMMI_SHARE")
+print("Tabella salvata con successo!")</code></pre>
+<p>Crea un grafico a barre dei top programmi:</p>
+<pre><code class="language-python">import matplotlib.pyplot as plt
+
+pdf_top = df_top.to_pandas()
+fig, ax = plt.subplots(figsize=(10, 6))
+ax.barh(pdf_top["TITOLO"], pdf_top["SHARE_MEDIO"], color="#29B5E8")
+ax.set_xlabel("Share Medio (%)")
+ax.set_title("Top 10 Programmi Mediaset per Share Medio")
+ax.invert_yaxis()
+plt.tight_layout()
+plt.show()</code></pre>
+
+<h3>Best Practice</h3>
+<ul>
+<li><strong>Lazy evaluation</strong>: le operazioni Snowpark non vengono eseguite finch&eacute; non chiami <code>.show()</code>, <code>.collect()</code>, <code>.count()</code> o <code>.to_pandas()</code></li>
+<li><strong>Pushdown</strong>: tutte le operazioni vengono tradotte in SQL ed eseguite nel warehouse, non in locale</li>
+<li><strong>to_pandas()</strong>: usa solo per piccoli dataset destinati alla visualizzazione. Per dataset grandi, lavora sempre con DataFrame Snowpark</li>
+</ul>
+
+<h3>Esercizio Pratico 1</h3>
+<p>Usando Snowpark, scrivi un'analisi che mostri per ogni fascia oraria il numero di trasmissioni, lo share medio e il top programma. Salva il risultato in <code>MEDIASET_LAB.ANALYTICS.ANALISI_FASCE_ORARIE</code>.</p>
+<hr />
+
+<!-- ================================================================ -->
+<!-- MODULO 2 -->
+<!-- ================================================================ -->
+
+<h2>Modulo 2: Cortex Analyst, Semantic Views e Snowflake Intelligence (45 min)</h2>
+
+<blockquote>
+<p>Le <strong>Semantic View</strong> sono un layer semantico dichiarativo che descrive tabelle, colonne, relazioni e metriche in modo comprensibile all'AI. <strong>Cortex Analyst</strong> traduce domande in linguaggio naturale in query SQL usando la Semantic View. <strong>Snowflake Intelligence</strong> &egrave; un agente conversazionale che combina Analyst e Search per rispondere a domande complesse.</p>
+</blockquote>
+
+<h3>Obiettivi di Apprendimento</h3>
+<ul>
+<li>Comprendere il concetto di Semantic View e il suo ruolo nel modello semantico</li>
+<li>Creare una Semantic View tramite l'interfaccia Snowsight</li>
+<li>Testare Cortex Analyst con domande in linguaggio naturale</li>
+<li>Creare un agente Snowflake Intelligence tramite Snowsight</li>
+<li>Interagire con l'agente e generare artifacts (grafici)</li>
+</ul>
+
+<h3>Istruzioni Passo-Passo</h3>
+
+<h4>Step 2.1: Cos'&egrave; una Semantic View</h4>
+<p>Una <strong>Semantic View</strong> &egrave; un oggetto Snowflake che definisce:</p>
+<ul>
+<li><strong>Tabelle</strong>: quali tabelle del database includere nel modello</li>
+<li><strong>Colonne</strong>: con descrizioni (COMMENT) e sinonimi (SYNONYMS) comprensibili all'AI</li>
+<li><strong>Relazioni</strong>: come le tabelle sono collegate tra loro (chiavi esterne)</li>
+<li><strong>Metriche</strong>: calcoli predefiniti (SUM, AVG, COUNT) che l'AI pu&ograve; usare direttamente</li>
+</ul>
+<p>Grazie alla Semantic View, Cortex Analyst pu&ograve; tradurre domande come <em>"Qual &egrave; lo share medio in prime time?"</em> nella query SQL corretta, senza che l'utente conosca la struttura del database.</p>
+
+<h4>Step 2.2: Creazione della Semantic View tramite Snowsight</h4>
+<ol>
+<li>Nel menu laterale, vai su <strong>Catalog</strong> &gt; <strong>Database Explorer</strong></li>
+<li>Naviga fino a <strong>MEDIASET_LAB</strong> &gt; <strong>ANALYTICS</strong></li>
+<li>Clicca sul pulsante <strong>Create</strong> (in alto a destra) &gt; <strong>Semantic View</strong></li>
+<li>Inserisci il nome: <code>MEDIASET_TV_INTELLIGENCE</code></li>
+<li>Clicca <strong>Next</strong></li>
+</ol>
+
+<p><strong>Aggiunta tabelle:</strong></p>
+<ol start="6">
+<li>Clicca <strong>+ Add Tables</strong> e seleziona le seguenti tabelle dallo schema <code>MEDIASET_LAB.RAW</code>:
+<ul>
+<li><code>PROGRAMMI_TV</code></li>
+<li><code>PALINSESTO</code></li>
+<li><code>ASCOLTI</code></li>
+<li><code>ABBONATI</code></li>
+<li><code>CONTENUTI_DESCRIZIONI</code></li>
+<li><code>CONTRATTI_PUBBLICITARI</code></li>
+<li><code>FEEDBACK_SOCIAL</code></li>
+</ul>
+</li>
+</ol>
+
+<p><strong>Configurazione colonne:</strong></p>
+<ol start="7">
+<li>Per ogni tabella, seleziona <strong>tutte le colonne</strong></li>
+<li>Per le colonne principali, verifica che le descrizioni auto-generate siano corrette e migliorale se necessario. Esempi di descrizioni raccomandate:
+<ul>
+<li><code>PROGRAMMI_TV.TITOLO</code> &rarr; <em>"Nome del programma televisivo"</em></li>
+<li><code>ASCOLTI.SHARE_PERCENTUALE</code> &rarr; <em>"Percentuale di share (quota di ascolto sul totale dei telespettatori attivi)"</em></li>
+<li><code>ASCOLTI.FASCIA_ORARIA</code> &rarr; <em>"Fascia oraria della rilevazione: Mattina, Access Prime Time, Prime Time, Seconda Serata, Pomeriggio, Preserale"</em></li>
+<li><code>CONTRATTI_PUBBLICITARI.BUDGET_TOTALE_EUR</code> &rarr; <em>"Budget totale del contratto pubblicitario in euro"</em></li>
+<li><code>FEEDBACK_SOCIAL.TESTO_FEEDBACK</code> &rarr; <em>"Testo completo del commento o feedback"</em></li>
+</ul>
+</li>
+<li>Aggiungi <strong>sinonimi</strong> alle colonne pi&ugrave; importanti per migliorare la comprensione dell'AI:
+<ul>
+<li><code>TELESPETTATORI</code> &rarr; sinonimi: <em>spettatori, audience, numero spettatori</em></li>
+<li><code>SHARE_PERCENTUALE</code> &rarr; sinonimi: <em>share, quota di ascolto</em></li>
+<li><code>CANALE</code> &rarr; sinonimi: <em>rete, emittente, network</em></li>
+<li><code>GENERE</code> &rarr; sinonimi: <em>tipo programma, categoria, formato</em></li>
+<li><code>BUDGET_TOTALE_EUR</code> &rarr; sinonimi: <em>investimento pubblicitario, spesa pubblicitaria</em></li>
+</ul>
+</li>
+</ol>
+
+<p><strong>Configurazione relazioni:</strong></p>
+<ol start="10">
+<li>Nella sezione <strong>Relationships</strong>, aggiungi le seguenti relazioni:</li>
+</ol>
+<table>
+<thead>
+<tr><th>Tabella origine</th><th>Colonna</th><th>&rarr;</th><th>Tabella destinazione</th><th>Colonna</th></tr>
+</thead>
+<tbody>
+<tr><td>PALINSESTO</td><td>PROGRAMMA_ID</td><td>&rarr;</td><td>PROGRAMMI_TV</td><td>PROGRAMMA_ID</td></tr>
+<tr><td>ASCOLTI</td><td>PROGRAMMA_ID</td><td>&rarr;</td><td>PROGRAMMI_TV</td><td>PROGRAMMA_ID</td></tr>
+<tr><td>ASCOLTI</td><td>PALINSESTO_ID</td><td>&rarr;</td><td>PALINSESTO</td><td>PALINSESTO_ID</td></tr>
+<tr><td>FEEDBACK_SOCIAL</td><td>PROGRAMMA_ID</td><td>&rarr;</td><td>PROGRAMMI_TV</td><td>PROGRAMMA_ID</td></tr>
+<tr><td>CONTENUTI_DESCRIZIONI</td><td>PROGRAMMA_ID</td><td>&rarr;</td><td>PROGRAMMI_TV</td><td>PROGRAMMA_ID</td></tr>
+</tbody>
+</table>
+
+<p><strong>Configurazione metriche:</strong></p>
+<ol start="11">
+<li>Nella sezione <strong>Metrics</strong>, aggiungi le metriche calcolate:</li>
+</ol>
+<table>
+<thead>
+<tr><th>Nome Metrica</th><th>Espressione</th><th>Descrizione</th></tr>
+</thead>
+<tbody>
+<tr><td>TELESPETTATORI_TOTALI</td><td>SUM(ASCOLTI.TELESPETTATORI)</td><td>Numero totale di telespettatori</td></tr>
+<tr><td>SHARE_MEDIO</td><td>AVG(ASCOLTI.SHARE_PERCENTUALE)</td><td>Share medio percentuale</td></tr>
+<tr><td>NUMERO_RILEVAZIONI</td><td>COUNT(ASCOLTI.ASCOLTO_ID)</td><td>Numero totale di rilevazioni</td></tr>
+<tr><td>TRASMISSIONI_TOTALI</td><td>COUNT(PALINSESTO.PALINSESTO_ID)</td><td>Numero totale di trasmissioni</td></tr>
+<tr><td>NUMERO_ABBONATI</td><td>COUNT(ABBONATI.ABBONATO_ID)</td><td>Numero totale di abbonati</td></tr>
+<tr><td>RICAVO_MENSILE_ABBONAMENTI</td><td>SUM(ABBONATI.IMPORTO_MENSILE)</td><td>Ricavo mensile totale abbonamenti</td></tr>
+<tr><td>BUDGET_PUBBLICITARIO_TOTALE</td><td>SUM(CONTRATTI_PUBBLICITARI.BUDGET_TOTALE_EUR)</td><td>Budget pubblicitario totale</td></tr>
+<tr><td>NUMERO_CONTRATTI</td><td>COUNT(CONTRATTI_PUBBLICITARI.CONTRATTO_ID)</td><td>Numero contratti pubblicitari</td></tr>
+<tr><td>TOTALE_FEEDBACK</td><td>COUNT(FEEDBACK_SOCIAL.FEEDBACK_ID)</td><td>Numero feedback social</td></tr>
+<tr><td>LIKES_TOTALI</td><td>SUM(FEEDBACK_SOCIAL.LIKES)</td><td>Totale likes social</td></tr>
+<tr><td>SHARES_TOTALI</td><td>SUM(FEEDBACK_SOCIAL.SHARES)</td><td>Totale condivisioni social</td></tr>
+<tr><td>COSTO_PRODUZIONE_TOTALE</td><td>SUM(PROGRAMMI_TV.COSTO_EPISODIO_EUR)</td><td>Costo totale di produzione</td></tr>
+</tbody>
+</table>
+
+<ol start="12">
+<li>Clicca <strong>Create</strong> per salvare la Semantic View</li>
+</ol>
+
+<h4>Step 2.3: Verifica della Semantic View</h4>
+<p>Apri un worksheet SQL ed esegui:</p>
+<pre><code class="language-sql">-- Verifica che la Semantic View sia stata creata
+SHOW SEMANTIC VIEWS IN SCHEMA MEDIASET_LAB.ANALYTICS;
+
+-- Descrivi la struttura
+DESCRIBE SEMANTIC VIEW MEDIASET_LAB.ANALYTICS.MEDIASET_TV_INTELLIGENCE;</code></pre>
+<p>Puoi anche verificare dal <strong>Catalog</strong>: naviga a <code>MEDIASET_LAB</code> &gt; <code>ANALYTICS</code> e dovresti vedere <code>MEDIASET_TV_INTELLIGENCE</code> nella lista degli oggetti.</p>
+
+<h4>Step 2.4: Test nel Playground di Cortex Analyst</h4>
+<ol>
+<li>Dal <strong>Catalog</strong>, clicca sulla Semantic View <code>MEDIASET_TV_INTELLIGENCE</code></li>
+<li>Clicca su <strong>"..." (menu)</strong> &gt; <strong>"Open with Cortex Analyst"</strong></li>
+<li>Si apre il Playground dove puoi fare domande in linguaggio naturale</li>
+</ol>
+<p><strong>Prova queste domande:</strong></p>
+<ul>
+<li><em>"Quali sono i top 5 programmi per share medio?"</em></li>
+<li><em>"Qual &egrave; lo share medio in prime time per canale?"</em></li>
+<li><em>"Budget pubblicitario totale per settore merceologico"</em></li>
+<li><em>"Quanti abbonati Premium abbiamo?"</em></li>
+<li><em>"Come si distribuiscono i telespettatori per regione?"</em></li>
+</ul>
+<blockquote>
+<p><strong>Suggerimento:</strong> Osserva la query SQL generata da Cortex Analyst per ogni domanda. Verifica che sia corretta confrontandola con le query nella Sezione 5 dello script <code>modulo_1_setup_verifiche.sql</code>.</p>
+</blockquote>
+
+<h4>Step 2.5: Creazione del Cortex Agent (Snowflake Intelligence) tramite Snowsight</h4>
+<ol>
+<li>Nel menu laterale, vai su <strong>AI &amp; ML</strong> &gt; <strong>Snowflake Intelligence</strong></li>
+<li>Clicca su <strong>"+ Create"</strong> (in alto a destra)</li>
+<li>Compila i campi:
+<ul>
+<li><strong>Name</strong>: <code>MEDIASET_INTELLIGENCE_AGENT</code></li>
+<li><strong>Database</strong>: <code>MEDIASET_LAB</code></li>
+<li><strong>Schema</strong>: <code>ANALYTICS</code></li>
+<li><strong>Description</strong>: <em>"Assistente AI per l'analisi dei dati televisivi Mediaset"</em></li>
+</ul>
+</li>
+</ol>
+
+<p><strong>Aggiunta tool Semantic View:</strong></p>
+<ol start="4">
+<li>Nella sezione <strong>Tools</strong>, clicca <strong>"+ Add Tool"</strong></li>
+<li>Seleziona <strong>"Analyst (Semantic View)"</strong></li>
+<li>Scegli la Semantic View: <code>MEDIASET_LAB.ANALYTICS.MEDIASET_TV_INTELLIGENCE</code></li>
+<li>Nel campo Description del tool, inserisci: <em>"Interroga i dati su ascolti, palinsesto, programmi TV, abbonati, pubblicit&agrave; e feedback social di Mediaset"</em></li>
+</ol>
+
+<p><strong>Configurazione istruzioni:</strong></p>
+<ol start="8">
+<li>Nella sezione <strong>Instructions</strong>, inserisci il seguente testo:</li>
+</ol>
+<pre><code>Sei un assistente per l'analisi dei dati televisivi di Mediaset.
+Rispondi sempre in italiano.
+
+Il tuo compito &egrave; aiutare gli utenti a esplorare i dati su:
+- Ascolti televisivi (telespettatori, share, regioni, fasce orarie)
+- Palinsesto (programmazione, prime TV, repliche)
+- Programmi TV (generi, canali, costi di produzione)
+- Abbonati (piani, stato, distribuzione geografica)
+- Contratti pubblicitari (budget, inserzionisti, settori, campagne)
+- Feedback social (commenti, likes, condivisioni per programma)
+
+Linee guida:
+- Usa il linguaggio televisivo italiano (share, prime time, palinsesto, audience)
+- Quando presenti numeri di telespettatori, formattali in milioni (es. 1.5M)
+- Quando presenti importi in euro, usa il simbolo EUR e formatta con separatore delle migliaia
+- Se l'utente chiede informazioni generiche, suggerisci domande pi&ugrave; specifiche
+- Se una domanda non &egrave; collegata ai dati televisivi, rispondi cortesemente che puoi aiutare solo con analisi sui dati Mediaset</code></pre>
+
+<ol start="9">
+<li>Clicca <strong>Create</strong> per salvare l'agente</li>
+</ol>
+
+<h4>Step 2.6: Test di Snowflake Intelligence</h4>
+<p>Dopo la creazione, l'agente si apre automaticamente nella chat. Prova queste domande:</p>
+<p><strong>Domande su ascolti e share:</strong></p>
+<ul>
+<li><em>"Quali sono i programmi con lo share pi&ugrave; alto?"</em></li>
+<li><em>"Come vanno gli ascolti in prime time su Canale 5?"</em></li>
+<li><em>"Qual &egrave; la distribuzione dei telespettatori per regione?"</em></li>
+</ul>
+<p><strong>Domande su pubblicit&agrave;:</strong></p>
+<ul>
+<li><em>"Chi sono i top 3 inserzionisti per budget?"</em></li>
+<li><em>"Quanto investono nel settore alimentare?"</em></li>
+</ul>
+<p><strong>Domande sugli abbonati:</strong></p>
+<ul>
+<li><em>"Quanti abbonati attivi abbiamo per tipo di abbonamento?"</em></li>
+<li><em>"Qual &egrave; il ricavo mensile dagli abbonamenti?"</em></li>
+</ul>
+
+<h4>Step 2.7: Creazione di Artifacts (Grafici)</h4>
+<p>Snowflake Intelligence pu&ograve; generare grafici interattivi. Prova:</p>
+<ul>
+<li><em>"Mostrami un grafico a barre dello share medio per canale"</em></li>
+<li><em>"Crea un grafico a torta della distribuzione dei programmi per genere"</em></li>
+<li><em>"Grafico trend telespettatori per fascia oraria"</em></li>
+</ul>
+<blockquote>
+<p><strong>Nota:</strong> Gli artifacts vengono generati automaticamente quando l'agente riconosce che una visualizzazione &egrave; utile. Puoi anche richiederli esplicitamente.</p>
+</blockquote>
+
+<h3>Esercizio Pratico 2</h3>
+<p>Formula 3 domande personalizzate all'agente che combinino dati da tabelle diverse (es. ascolti + programmi, pubblicit&agrave; + fasce orarie). Salva almeno un artifact come grafico.</p>
+<hr />
+
+<!-- ================================================================ -->
+<!-- MODULO 3 -->
+<!-- ================================================================ -->
+
+<h2>Modulo 3: Cortex Search - Ricerca Semantica (30 min)</h2>
+
+<blockquote>
+<p><strong>Cortex Search</strong> &egrave; un servizio di ricerca semantica che permette di cercare informazioni in linguaggio naturale all'interno di dati testuali. A differenza di una ricerca SQL con <code>LIKE</code>, Cortex Search comprende il <strong>significato</strong> delle parole: cercando <em>"programmi di satira"</em> trover&agrave; anche risultati che contengono <em>"comicit&agrave; politica"</em> o <em>"umorismo"</em>.</p>
+</blockquote>
+
+<h3>Obiettivi di Apprendimento</h3>
+<ul>
+<li>Comprendere il concetto di ricerca semantica vs ricerca testuale</li>
+<li>Preparare dati testuali per l'indicizzazione (chunking)</li>
+<li>Creare un Cortex Search Service</li>
+<li>Testare ricerche semantiche in linguaggio naturale</li>
+<li>Integrare Search Service con Snowflake Intelligence</li>
+</ul>
+
+<h3>Istruzioni Passo-Passo</h3>
+
+<h4>Step 3.1: Preparazione Dati - Tabella Chunks</h4>
+<p>Apri un worksheet SQL ed esegui lo script <code>modulo_2_cortex_search.sql</code>, oppure esegui i seguenti comandi passo per passo.</p>
+<p>Per prima cosa, creiamo una tabella con un campo di testo ricco che concatena tutte le informazioni di ogni programma:</p>
+
+<pre><code class="language-sql">USE ROLE SYSADMIN;
+USE DATABASE MEDIASET_LAB;
+USE SCHEMA RAW;
+USE WAREHOUSE MEDIASET_WH;
+
+CREATE OR REPLACE TABLE MEDIASET_LAB.RAW.CONTENUTI_CHUNKS AS
+SELECT
+    CONTENUTO_ID,
+    PROGRAMMA_ID,
+    TITOLO,
+    CONCAT(
+        'Titolo: ', TITOLO, '\n',
+        'Descrizione: ', COALESCE(DESCRIZIONE_BREVE, ''), '\n',
+        'Trama completa: ', COALESCE(DESCRIZIONE_COMPLETA, ''), '\n',
+        'Cast principale: ', COALESCE(CAST_PRINCIPALE, ''), '\n',
+        'Regista: ', COALESCE(REGISTA, ''), '\n',
+        'Genere/Parole chiave: ', COALESCE(PAROLE_CHIAVE, ''), '\n',
+        'Anno produzione: ', COALESCE(ANNO_PRODUZIONE::VARCHAR, ''), '\n',
+        'Paese: ', COALESCE(PAESE_ORIGINE, ''), '\n',
+        'Lingua: ', COALESCE(LINGUA_ORIGINALE, '')
+    ) AS CHUNK_TEXT
+FROM MEDIASET_LAB.RAW.CONTENUTI_DESCRIZIONI;</code></pre>
+
+<p>Verifica i chunks creati:</p>
+<pre><code class="language-sql">SELECT CONTENUTO_ID, TITOLO, LENGTH(CHUNK_TEXT) AS LUNGHEZZA_CHUNK
+FROM MEDIASET_LAB.RAW.CONTENUTI_CHUNKS
+ORDER BY CONTENUTO_ID;</code></pre>
+
+<h4>Step 3.2: Creazione del Cortex Search Service</h4>
+<pre><code class="language-sql">CREATE OR REPLACE CORTEX SEARCH SERVICE MEDIASET_LAB.RAW.RICERCA_CONTENUTI
+  ON CHUNK_TEXT
+  ATTRIBUTES TITOLO
+  WAREHOUSE = MEDIASET_WH
+  TARGET_LAG = '1 hour'
+  COMMENT = 'Ricerca semantica sui contenuti e descrizioni dei programmi TV Mediaset'
+AS (
+    SELECT
+        CHUNK_TEXT,
+        TITOLO,
+        CONTENUTO_ID,
+        PROGRAMMA_ID
+    FROM MEDIASET_LAB.RAW.CONTENUTI_CHUNKS
+);</code></pre>
+
+<p>Verifica:</p>
+<pre><code class="language-sql">SHOW CORTEX SEARCH SERVICES IN SCHEMA MEDIASET_LAB.RAW;</code></pre>
+
+<h4>Step 3.3: Test Ricerca Semantica</h4>
+<p>Usa <code>SEARCH_PREVIEW</code> per testare il servizio. La ricerca semantica comprende il significato, non solo le parole esatte:</p>
+<pre><code class="language-sql">-- Cerca programmi di satira
+SELECT PARSE_JSON(
+    SNOWFLAKE.CORTEX.SEARCH_PREVIEW(
+        'MEDIASET_LAB.RAW.RICERCA_CONTENUTI',
+        '{
+            "query": "programmi di satira e commedia politica",
+            "columns": ["TITOLO", "CHUNK_TEXT"],
+            "limit": 3
+        }'
+    )
+) AS risultati;</code></pre>
+
+<p><strong>Prova anche queste ricerche:</strong></p>
+<pre><code class="language-sql">-- Talent show musicali
+SELECT PARSE_JSON(
+    SNOWFLAKE.CORTEX.SEARCH_PREVIEW(
+        'MEDIASET_LAB.RAW.RICERCA_CONTENUTI',
+        '{
+            "query": "talent show musicale con giovani cantanti",
+            "columns": ["TITOLO", "CHUNK_TEXT"],
+            "limit": 3
+        }'
+    )
+) AS risultati;
+
+-- Reality show
+SELECT PARSE_JSON(
+    SNOWFLAKE.CORTEX.SEARCH_PREVIEW(
+        'MEDIASET_LAB.RAW.RICERCA_CONTENUTI',
+        '{
+            "query": "reality show con concorrenti che vivono insieme",
+            "columns": ["TITOLO", "CHUNK_TEXT"],
+            "limit": 3
+        }'
+    )
+) AS risultati;
+
+-- Programmi di informazione
+SELECT PARSE_JSON(
+    SNOWFLAKE.CORTEX.SEARCH_PREVIEW(
+        'MEDIASET_LAB.RAW.RICERCA_CONTENUTI',
+        '{
+            "query": "programmi di giornalismo investigativo e inchieste",
+            "columns": ["TITOLO", "CHUNK_TEXT"],
+            "limit": 3
+        }'
+    )
+) AS risultati;</code></pre>
+
+<blockquote>
+<p><strong>Nota:</strong> Osserva come la ricerca semantica restituisce risultati pertinenti anche quando le parole esatte non corrispondono. Questo &egrave; il potere degli embeddings!</p>
+</blockquote>
+
+<h4>Step 3.4: Integrazione con Snowflake Intelligence</h4>
+<p>Ora aggiungiamo il servizio di ricerca come tool aggiuntivo all'agente creato nel Modulo 2:</p>
+<ol>
+<li>Vai su <strong>AI &amp; ML</strong> &gt; <strong>Snowflake Intelligence</strong></li>
+<li>Clicca su <strong>MEDIASET_INTELLIGENCE_AGENT</strong> per aprirlo</li>
+<li>Clicca su <strong>Edit</strong> (icona matita) per modificare la configurazione</li>
+<li>Nella sezione Tools, clicca <strong>"+ Add Tool"</strong></li>
+<li>Seleziona <strong>"Search Service"</strong></li>
+<li>Scegli il servizio: <code>MEDIASET_LAB.RAW.RICERCA_CONTENUTI</code></li>
+<li>Nel campo Description, inserisci: <em>"Cerca nelle descrizioni e schede dei programmi TV Mediaset per trovare informazioni su trama, cast, genere e dettagli produttivi"</em></li>
+<li>Clicca <strong>Save</strong> per salvare le modifiche</li>
+</ol>
+
+<h4>Step 3.5: Test Domande Combinate</h4>
+<p>Ora l'agente pu&ograve; rispondere usando sia i dati strutturati (Semantic View) sia la ricerca testuale (Search). Prova:</p>
+<ul>
+<li><em>"Quali programmi comici abbiamo? Descrivili brevemente"</em></li>
+<li><em>"Cerca programmi adatti a un pubblico giovane e dimmi il loro share"</em></li>
+<li><em>"Trovami programmi con Gerry Scotti e mostrami i loro ascolti"</em></li>
+<li><em>"Quali programmi parlano di cucina? Quanto share fanno?"</em></li>
+</ul>
+<blockquote>
+<p><strong>Nota:</strong> L'agente decide automaticamente quale tool usare (o entrambi) in base alla domanda.</p>
+</blockquote>
+
+<h3>Esercizio Pratico 3</h3>
+<p>Cerca almeno 3 programmi per tema (es. <em>"avventura"</em>, <em>"musica"</em>, <em>"investigazione"</em>) e confronta i risultati della ricerca semantica con una ricerca SQL tradizionale usando <code>LIKE</code>.</p>
+<hr />
+
+<!-- ================================================================ -->
+<!-- MODULO 4 -->
+<!-- ================================================================ -->
+
+<h2>Modulo 4: AI SQL in Notebook (30 min)</h2>
+
+<blockquote>
+<p>Le <strong>funzioni AI SQL</strong> di Snowflake (prefisso <code>SNOWFLAKE.CORTEX.*</code>) permettono di applicare modelli di intelligenza artificiale direttamente nelle query SQL, senza spostare i dati fuori da Snowflake. Sono disponibili funzioni per sentiment analysis, riassunto, traduzione, classificazione, estrazione e generazione di testo.</p>
+</blockquote>
+
+<h3>Obiettivi di Apprendimento</h3>
+<ul>
+<li>Importare e utilizzare un notebook Snowflake</li>
+<li>Applicare Sentiment Analysis ai feedback social</li>
+<li>Riassumere automaticamente descrizioni di programmi</li>
+<li>Tradurre contenuti in pi&ugrave; lingue</li>
+<li>Generare analisi con prompt LLM personalizzati</li>
+<li>Classificare ed estrarre informazioni da testi</li>
+</ul>
+
+<h3>Istruzioni Passo-Passo</h3>
+
+<h4>Step 4.1: Importare il Notebook AI SQL</h4>
+<ol>
+<li>Nel menu laterale, vai su <strong>Projects</strong> &gt; <strong>Workspaces</strong></li>
+<li>Clicca su <strong>"..."</strong> (menu) &gt; <strong>Import</strong> &gt; <strong>Import .ipynb file</strong></li>
+<li>Seleziona il file <code>Mediaset_AISQL_Lab.ipynb</code> fornito</li>
+<li>Il notebook si apre automaticamente con tutte le celle pronte</li>
+</ol>
+<blockquote>
+<p><strong>Alternativa:</strong> Se preferisci lavorare in un worksheet SQL, usa lo script <code>modulo_3_aisql.sql</code> che contiene gli stessi esempi.</p>
+</blockquote>
+
+<h4>Step 4.2: Setup Iniziale</h4>
+<p>Esegui la prima cella del notebook per impostare il contesto:</p>
+<pre><code class="language-sql">USE DATABASE MEDIASET_LAB;
+USE SCHEMA RAW;
+USE WAREHOUSE MEDIASET_WH;</code></pre>
+
+<h4>Step 4.3: Sentiment Analysis</h4>
+<p>La funzione <code>SNOWFLAKE.CORTEX.SENTIMENT()</code> analizza il tono emotivo di un testo e restituisce un punteggio da <strong>-1</strong> (molto negativo) a <strong>+1</strong> (molto positivo).</p>
+<p>Esegui la cella che analizza il sentiment dei feedback social:</p>
+<pre><code class="language-sql">SELECT
+    FEEDBACK_ID,
+    PIATTAFORMA,
+    SUBSTR(TESTO_FEEDBACK, 1, 80) || '...' AS TESTO_BREVE,
+    ROUND(SNOWFLAKE.CORTEX.SENTIMENT(TESTO_FEEDBACK), 3) AS SENTIMENT_SCORE,
+    CASE
+        WHEN SNOWFLAKE.CORTEX.SENTIMENT(TESTO_FEEDBACK) &gt; 0.3 THEN 'POSITIVO'
+        WHEN SNOWFLAKE.CORTEX.SENTIMENT(TESTO_FEEDBACK) &lt; -0.3 THEN 'NEGATIVO'
+        ELSE 'NEUTRO'
+    END AS SENTIMENT_LABEL
+FROM MEDIASET_LAB.RAW.FEEDBACK_SOCIAL
+ORDER BY SENTIMENT_SCORE ASC;</code></pre>
+<blockquote>
+<p><strong>Osserva:</strong> I feedback negativi (es. critiche ai programmi) hanno score vicino a -1, quelli entusiasti vicino a +1.</p>
+</blockquote>
+<p>Esegui anche la cella con le statistiche aggregate per piattaforma per vedere quale social network ha il sentiment pi&ugrave; positivo.</p>
+
+<h4>Step 4.4: Summarize</h4>
+<p>La funzione <code>SNOWFLAKE.CORTEX.SUMMARIZE()</code> genera un riassunto conciso di testi lunghi:</p>
+<pre><code class="language-sql">SELECT
+    TITOLO,
+    SNOWFLAKE.CORTEX.SUMMARIZE(DESCRIZIONE_COMPLETA) AS RIASSUNTO
+FROM MEDIASET_LAB.RAW.CONTENUTI_DESCRIZIONI
+WHERE LENGTH(DESCRIZIONE_COMPLETA) &gt; 100
+LIMIT 5;</code></pre>
+
+<h4>Step 4.5: Translate</h4>
+<p>La funzione <code>SNOWFLAKE.CORTEX.TRANSLATE()</code> traduce testo tra lingue diverse:</p>
+<pre><code class="language-sql">SELECT
+    FEEDBACK_ID,
+    TESTO_FEEDBACK AS ORIGINALE_IT,
+    SNOWFLAKE.CORTEX.TRANSLATE(TESTO_FEEDBACK, 'it', 'en') AS TRADUZIONE_EN,
+    SNOWFLAKE.CORTEX.TRANSLATE(TESTO_FEEDBACK, 'it', 'es') AS TRADUZIONE_ES
+FROM MEDIASET_LAB.RAW.FEEDBACK_SOCIAL
+LIMIT 5;</code></pre>
+
+<h4>Step 4.6: AI Complete</h4>
+<p>La funzione <code>SNOWFLAKE.CORTEX.COMPLETE()</code> invia prompt personalizzati a un LLM. Esegui la cella che analizza i feedback con suggerimenti editoriali:</p>
+<pre><code class="language-sql">SELECT
+    FEEDBACK_ID,
+    TESTO_FEEDBACK,
+    SNOWFLAKE.CORTEX.COMPLETE(
+        'mistral-large2',
+        CONCAT(
+            'Sei un esperto di contenuti televisivi italiani. ',
+            'Analizza il seguente feedback del pubblico su un programma Mediaset e fornisci: ',
+            '1) Sentiment (POSITIVO/NEGATIVO/NEUTRO) ',
+            '2) Tema principale del commento ',
+            '3) Azione suggerita per la redazione in una frase. ',
+            'Feedback: ', TESTO_FEEDBACK
+        )
+    ) AS ANALISI_AI
+FROM MEDIASET_LAB.RAW.FEEDBACK_SOCIAL
+LIMIT 5;</code></pre>
+<p>Esegui anche la cella che genera un mini-report automatico dagli ascolti aggregati.</p>
+
+<h4>Step 4.7: Classify Text</h4>
+<p>La funzione <code>SNOWFLAKE.CORTEX.CLASSIFY_TEXT()</code> classifica il testo in categorie predefinite:</p>
+<pre><code class="language-sql">SELECT
+    FEEDBACK_ID,
+    SUBSTR(TESTO_FEEDBACK, 1, 80) || '...' AS TESTO_BREVE,
+    SNOWFLAKE.CORTEX.CLASSIFY_TEXT(
+        TESTO_FEEDBACK,
+        ['Entusiasta', 'Critica costruttiva', 'Reclamo', 'Suggerimento', 'Neutro']
+    ):label::VARCHAR AS CLASSIFICAZIONE,
+    ROUND(SNOWFLAKE.CORTEX.CLASSIFY_TEXT(
+        TESTO_FEEDBACK,
+        ['Entusiasta', 'Critica costruttiva', 'Reclamo', 'Suggerimento', 'Neutro']
+    ):score::FLOAT, 3) AS CONFIDENCE
+FROM MEDIASET_LAB.RAW.FEEDBACK_SOCIAL
+LIMIT 15;</code></pre>
+
+<h4>Step 4.8: Extract Answer</h4>
+<p>La funzione <code>SNOWFLAKE.CORTEX.EXTRACT_ANSWER()</code> estrae risposte specifiche da un testo:</p>
+<pre><code class="language-sql">SELECT
+    FEEDBACK_ID,
+    TESTO_FEEDBACK,
+    SNOWFLAKE.CORTEX.EXTRACT_ANSWER(
+        TESTO_FEEDBACK,
+        'Quale programma televisivo viene menzionato o commentato?'
+    ) AS PROGRAMMA_MENZIONATO,
+    SNOWFLAKE.CORTEX.EXTRACT_ANSWER(
+        TESTO_FEEDBACK,
+        'Qual &egrave; l''aspetto positivo o negativo principale evidenziato?'
+    ) AS ASPETTO_PRINCIPALE
+FROM MEDIASET_LAB.RAW.FEEDBACK_SOCIAL
+LIMIT 10;</code></pre>
+
+<h3>Best Practice</h3>
+<ul>
+<li><strong>Governance</strong>: tutte le funzioni AI SQL rispettano RBAC. Se un utente non ha accesso a una tabella, le funzioni AI non restituiscono risultati</li>
+<li><strong>Performance</strong>: le funzioni AI aggiungono latenza alle query. Usa <code>LIMIT</code> durante lo sviluppo</li>
+<li><strong>Costi</strong>: ogni chiamata AI consuma crediti Cortex. Evita di eseguire funzioni AI su tabelle molto grandi senza filtri</li>
+<li><strong>Modelli</strong>: <code>SNOWFLAKE.CORTEX.COMPLETE()</code> supporta diversi modelli (mistral-large2, llama3.1-70b, etc.). Scegli in base al trade-off qualit&agrave;/costo</li>
+</ul>
+
+<h3>Esercizio Pratico 4</h3>
+<p>Scrivi una query che combini Sentiment Analysis e Classify Text per creare un report completo dei feedback: per ogni feedback mostra il testo breve, il sentiment score, la classificazione e la confidence.</p>
+<hr />
+
+<!-- ================================================================ -->
+<!-- PULIZIA -->
+<!-- ================================================================ -->
+
+<h2>Pulizia Risorse (Opzionale)</h2>
+<p>Al termine del workshop, se desideri rimuovere gli oggetti creati:</p>
+<pre><code class="language-sql">USE ROLE SYSADMIN;
+
+-- Rimuovi Cortex Search Service
+DROP CORTEX SEARCH SERVICE IF EXISTS MEDIASET_LAB.RAW.RICERCA_CONTENUTI;
+
+-- Rimuovi tabella chunks
+DROP TABLE IF EXISTS MEDIASET_LAB.RAW.CONTENUTI_CHUNKS;
+
+-- Rimuovi tabelle analytics create dai notebook
+DROP TABLE IF EXISTS MEDIASET_LAB.ANALYTICS.TOP_PROGRAMMI_SHARE;
+DROP TABLE IF EXISTS MEDIASET_LAB.ANALYTICS.ANALISI_FASCE_ORARIE;
+
+-- Rimuovi Semantic View e Agent (via SQL o via UI)
+DROP SEMANTIC VIEW IF EXISTS MEDIASET_LAB.ANALYTICS.MEDIASET_TV_INTELLIGENCE;
+DROP CORTEX AGENT IF EXISTS MEDIASET_LAB.ANALYTICS.MEDIASET_INTELLIGENCE_AGENT;</code></pre>
+<blockquote>
+<p><strong>Nota:</strong> Il database <code>MEDIASET_LAB</code> e i dati del Workshop 1 rimangono intatti. Vengono rimossi solo gli oggetti creati in questo workshop.</p>
+</blockquote>
+<hr />
+
+<h2>Risorse Utili</h2>
+<table>
+<thead>
+<tr><th>Risorsa</th><th>Descrizione</th></tr>
+</thead>
+<tbody>
+<tr><td><strong>Semantic Views</strong></td><td>Documentazione Snowflake sulle Semantic View</td></tr>
+<tr><td><strong>Cortex Analyst</strong></td><td>Guida a Cortex Analyst e modello semantico</td></tr>
+<tr><td><strong>Cortex Search</strong></td><td>Documentazione Cortex Search Service</td></tr>
+<tr><td><strong>AI SQL Functions</strong></td><td>Riferimento funzioni SNOWFLAKE.CORTEX.*</td></tr>
+<tr><td><strong>Snowpark Python</strong></td><td>Guida Snowpark DataFrame API</td></tr>
+<tr><td><strong>Snowflake Notebooks</strong></td><td>Documentazione notebook Snowflake</td></tr>
+</tbody>
+</table>
+
+</body>
+</html>

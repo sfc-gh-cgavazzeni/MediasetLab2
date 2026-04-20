@@ -176,7 +176,7 @@ UNION ALL SELECT 'CONTRATTI_PUBBLICITARI', COUNT(*) FROM MEDIASET_LAB.RAW.CONTRA
 UNION ALL SELECT 'FEEDBACK_SOCIAL', COUNT(*) FROM MEDIASET_LAB.RAW.FEEDBACK_SOCIAL
 ORDER BY tabella;</code></pre>
 
-<p><strong>Risultati attesi:</strong> ABBONATI (20), ASCOLTI (5000), CONTENUTI_DESCRIZIONI (20), CONTRATTI_PUBBLICITARI (15), FEEDBACK_SOCIAL (20), PALINSESTO (600), PROGRAMMI_TV (20).</p>
+<p><strong>Risultati attesi:</strong> ABBONATI (20), ASCOLTI (5003), CONTENUTI_DESCRIZIONI (20), CONTRATTI_PUBBLICITARI (15), FEEDBACK_SOCIAL (20), PALINSESTO (600), PROGRAMMI_TV (17).</p>
 <p>Se le tabelle non sono presenti, eseguire prima lo script <code>01_setup_data.sql</code> del Workshop 1.</p>
 <hr />
 
@@ -204,8 +204,8 @@ ORDER BY tabella;</code></pre>
 
 <h4>Step 1.1: Importare il Notebook Snowpark</h4>
 <ol>
-<li>Nel menu laterale, vai su <strong>Projects</strong> &gt; <strong>Workspaces</strong></li>
-<li>Clicca su <strong>"..."</strong> (menu) &gt; <strong>Import</strong> &gt; <strong>Import .ipynb file</strong></li>
+<li>Nel menu laterale, clicca su <strong>Projects</strong> (si apre direttamente la pagina Workspaces)</li>
+<li>Clicca sul pulsante <strong>"+"</strong> in alto a destra, poi seleziona <strong>Import</strong> &gt; <strong>Import .ipynb file</strong></li>
 <li>Seleziona il file <code>Mediaset_Snowpark_Lab.ipynb</code> fornito</li>
 <li>Il notebook si apre con celle Python pronte per l'esecuzione</li>
 </ol>
@@ -334,7 +334,7 @@ plt.show()</code></pre>
 
 <h4>Step 2.2: Creazione della Semantic View tramite Snowsight</h4>
 <ol>
-<li>Nel menu laterale, vai su <strong>Catalog</strong> &gt; <strong>Database Explorer</strong></li>
+<li>Nel menu laterale, clicca su <strong>Catalog</strong> (si apre direttamente il Database Explorer)</li>
 <li>Naviga fino a <strong>MEDIASET_LAB</strong> &gt; <strong>ANALYTICS</strong></li>
 <li>Clicca sul pulsante <strong>Create</strong> (in alto a destra) &gt; <strong>Semantic View</strong></li>
 <li>Inserisci il nome: <code>MEDIASET_TV_INTELLIGENCE</code></li>
@@ -453,7 +453,7 @@ DESCRIBE SEMANTIC VIEW MEDIASET_LAB.ANALYTICS.MEDIASET_TV_INTELLIGENCE;</code></
 
 <h4>Step 2.5: Creazione del Cortex Agent (Snowflake Intelligence) tramite Snowsight</h4>
 <ol>
-<li>Nel menu laterale, vai su <strong>AI &amp; ML</strong> &gt; <strong>Snowflake Intelligence</strong></li>
+<li>Nel menu laterale, clicca su <strong>AI &amp; ML</strong> (si apre AI Studio), poi clicca su <strong>Cortex Agents</strong></li>
 <li>Clicca su <strong>"+ Create"</strong> (in alto a destra)</li>
 <li>Compila i campi:
 <ul>
@@ -663,7 +663,7 @@ SELECT PARSE_JSON(
 <h4>Step 3.4: Integrazione con Snowflake Intelligence</h4>
 <p>Ora aggiungiamo il servizio di ricerca come tool aggiuntivo all'agente creato nel Modulo 2:</p>
 <ol>
-<li>Vai su <strong>AI &amp; ML</strong> &gt; <strong>Snowflake Intelligence</strong></li>
+<li>Vai su <strong>AI &amp; ML</strong> &gt; <strong>Cortex Agents</strong></li>
 <li>Clicca su <strong>MEDIASET_INTELLIGENCE_AGENT</strong> per aprirlo</li>
 <li>Clicca su <strong>Edit</strong> (icona matita) per modificare la configurazione</li>
 <li>Nella sezione Tools, clicca <strong>"+ Add Tool"</strong></li>
@@ -713,8 +713,8 @@ SELECT PARSE_JSON(
 
 <h4>Step 4.1: Importare il Notebook AI SQL</h4>
 <ol>
-<li>Nel menu laterale, vai su <strong>Projects</strong> &gt; <strong>Workspaces</strong></li>
-<li>Clicca su <strong>"..."</strong> (menu) &gt; <strong>Import</strong> &gt; <strong>Import .ipynb file</strong></li>
+<li>Nel menu laterale, clicca su <strong>Projects</strong> (si apre direttamente la pagina Workspaces)</li>
+<li>Clicca sul pulsante <strong>"+"</strong> in alto a destra, poi seleziona <strong>Import</strong> &gt; <strong>Import .ipynb file</strong></li>
 <li>Seleziona il file <code>Mediaset_AISQL_Lab.ipynb</code> fornito</li>
 <li>Il notebook si apre automaticamente con tutte le celle pronte</li>
 </ol>

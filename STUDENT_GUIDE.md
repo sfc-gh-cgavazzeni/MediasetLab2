@@ -41,7 +41,7 @@ UNION ALL SELECT 'FEEDBACK_SOCIAL', COUNT(*) FROM MEDIASET_LAB.RAW.FEEDBACK_SOCI
 ORDER BY tabella;
 ```
 
-**Risultati attesi:** ABBONATI (20), ASCOLTI (5000), CONTENUTI_DESCRIZIONI (20), CONTRATTI_PUBBLICITARI (15), FEEDBACK_SOCIAL (20), PALINSESTO (600), PROGRAMMI_TV (20).
+**Risultati attesi:** ABBONATI (20), ASCOLTI (5003), CONTENUTI_DESCRIZIONI (20), CONTRATTI_PUBBLICITARI (15), FEEDBACK_SOCIAL (20), PALINSESTO (600), PROGRAMMI_TV (17).
 
 Se le tabelle non sono presenti, eseguire prima lo script `01_setup_data.sql` del Workshop 1.
 
@@ -64,8 +64,8 @@ Se le tabelle non sono presenti, eseguire prima lo script `01_setup_data.sql` de
 
 #### Step 1.1: Importare il Notebook Snowpark
 
-1. Nel menu laterale, vai su **Projects** > **Workspaces**
-2. Clicca su **"..."** (menu) > **Import** > **Import .ipynb file**
+1. Nel menu laterale, clicca su **Projects** (si apre direttamente la pagina Workspaces)
+2. Clicca sul pulsante **"+"** in alto a destra, poi seleziona **Import** > **Import .ipynb file**
 3. Seleziona il file `Mediaset_Snowpark_Lab.ipynb` fornito
 4. Il notebook si apre con celle Python pronte per l'esecuzione
 
@@ -210,7 +210,7 @@ Grazie alla Semantic View, Cortex Analyst può tradurre domande come *"Qual è l
 
 #### Step 2.2: Creazione della Semantic View tramite Snowsight
 
-1. Nel menu laterale, vai su **Catalog** > **Database Explorer**
+1. Nel menu laterale, clicca su **Catalog** (si apre direttamente il Database Explorer)
 2. Naviga fino a **MEDIASET_LAB** > **ANALYTICS**
 3. Clicca sul pulsante **Create** (in alto a destra) > **Semantic View**
 4. Inserisci il nome: `MEDIASET_TV_INTELLIGENCE`
@@ -309,7 +309,7 @@ Puoi anche verificare dal **Catalog**: naviga a `MEDIASET_LAB` > `ANALYTICS` e d
 
 #### Step 2.5: Creazione del Cortex Agent (Snowflake Intelligence) tramite Snowsight
 
-1. Nel menu laterale, vai su **AI & ML** > **Snowflake Intelligence**
+1. Nel menu laterale, clicca su **AI & ML** (si apre AI Studio), poi clicca su **Cortex Agents**
 2. Clicca su **"+ Create"** (in alto a destra)
 3. Compila i campi:
    - **Name**: `MEDIASET_INTELLIGENCE_AGENT`
@@ -525,7 +525,7 @@ SELECT PARSE_JSON(
 
 Ora aggiungiamo il servizio di ricerca come tool aggiuntivo all'agente creato nel Modulo 2:
 
-1. Vai su **AI & ML** > **Snowflake Intelligence**
+1. Vai su **AI & ML** > **Cortex Agents**
 2. Clicca su **MEDIASET_INTELLIGENCE_AGENT** per aprirlo
 3. Clicca su **Edit** (icona matita) per modificare la configurazione
 4. Nella sezione Tools, clicca **"+ Add Tool"**
@@ -568,8 +568,8 @@ Cerca almeno 3 programmi per tema (es. *"avventura"*, *"musica"*, *"investigazio
 
 #### Step 4.1: Importare il Notebook AI SQL
 
-1. Nel menu laterale, vai su **Projects** > **Workspaces**
-2. Clicca su **"..."** (menu) > **Import** > **Import .ipynb file**
+1. Nel menu laterale, clicca su **Projects** (si apre direttamente la pagina Workspaces)
+2. Clicca sul pulsante **"+"** in alto a destra, poi seleziona **Import** > **Import .ipynb file**
 3. Seleziona il file `Mediaset_AISQL_Lab.ipynb` fornito
 4. Il notebook si apre automaticamente con tutte le celle pronte
 
